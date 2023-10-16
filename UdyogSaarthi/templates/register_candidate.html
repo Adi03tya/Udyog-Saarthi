@@ -1,0 +1,351 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp-Candidate</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="icon" type="image/x-icon" style="border-radius: 50%;" href="{% static 'assets/logo.png' %}">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static '/assets/logo.png' %}" alt="Logo" width="30" height="30" style="border-radius: 50%;" class="d-inline-block align-text-top">
+                    Udyog Sarthi
+                  </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'index' %}" aria-current="page" href="#">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active"  href="{% url 'jobs_page' %}">jobs</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link "  href="#">Notifications</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Learning
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Tutorials</a></li>
+                      <li><a class="dropdown-item" href="{% url 'previous_Year_questions' %}">Previous Year Question Papers</a></li>
+                      
+                    </ul>
+                    <div class="d-flex align-items-end">
+                      <li >
+                        <a href="{% url 'candidate_login' %}">
+                            <button type="button"  class="btn btn-success ms-auto mx-3">Candidate Login</button>
+                        </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'employer_login' %}">
+                        <button type="button" onclick="window.location.href = 'employer_login';" class="btn btn-success ms-auto mx-3">Employer Login</button>
+                      </a>
+                    </li>
+                    <li >
+                         <!-- Button trigger modal -->
+<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Sign Up
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Sign Up</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Please select your role!!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" href="{% url 'register_candidate' %}" class="btn btn-primary" data-bs-dismiss="modal">Candidate</button>
+         <a href="{% url 'register_employer' %}"> <button type="button"  class="btn btn-primary" data-bs-dismiss="modal">Employer</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>const myModal = document.getElementById('staticBackdrop')
+const myInput = document.getElementById('staticBackdropLabel')
+
+myModal.addEventListener('shown.bs.modal', () => {
+  myInput.focus()
+})</script>
+                    </div>
+
+                    
+                </div>
+                </ul>
+                
+              </div>
+            </div>
+          </nav>
+    </header>
+    <main>
+    <style>.card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+        }
+        .card-registration .select-arrow {
+        top: 13px;
+        }</style>
+    <section class="h-100 bg-light  border border-1px border-dark my-2 mx-5  ">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+             
+                    <div class="card-body p-md-5 text-black">
+                      <h3 class="mb-5 text-uppercase text-center">Create Learning Profile</h3>
+                      {% for message in messages %}
+                      <h5 style="color: red;">{{message}}</h5>
+                      {% endfor %}
+                      <form action="{% url 'register_candidate' %}" method="POST">
+                        {% csrf_token %}
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <input type="text" name="first_name" id="form3Example1m" class="form-control form-control-lg" />
+                            <label class="form-label" for="form3Example1m">First name</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <input type="text" name="last_name" id="form3Example1n" class="form-control form-control-lg" />
+                            <label class="form-label" for="form3Example1n">Last name</label>
+                          </div>
+                        </div>
+                      </div>
+      
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <input type="text" name="mothers_name" id="form3Example1m1" class="form-control form-control-lg" />
+                            <label class="form-label" for="form3Example1m1">Mother's name</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <input type="text" name="fathers_name" id="form3Example1n1" class="form-control form-control-lg" />
+                            <label class="form-label" for="form3Example1n1">Father's name</label>
+                          </div>
+                        </div>
+                      </div>
+      
+                      <div class="form-outline mb-4">
+                        <input type="text" name="address" id="form3Example8" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Example8">Address</label>
+                      </div>
+      
+                      <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+      
+                        <h6 class="mb-0 me-4">Gender: </h6>
+      
+                        <div class="form-check form-check-inline mb-0 me-4">
+                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
+                            value="option1" />
+                          <label class="form-check-label" for="femaleGender">Female</label>
+                        </div>
+      
+                        <div class="form-check form-check-inline mb-0 me-4">
+                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
+                            value="option2" />
+                          <label class="form-check-label" for="maleGender">Male</label>
+                        </div>
+      
+                        <div class="form-check form-check-inline mb-0">
+                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="otherGender"
+                            value="option3" />
+                          <label class="form-check-label" for="otherGender">Other</label>
+                        </div>
+      
+                      </div>
+      
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+      
+                          <select name ="state" class="select">
+                            <option value="1">State</option>
+                            <option value="2">Option 1</option>
+                            <option value="3">Option 2</option>
+                            <option value="4">Option 3</option>
+                          </select>
+      
+                        </div>
+                        <div class="col-md-6 mb-4 ">
+      
+                          <select name= "city" class="select">
+                            <option value="1">City</option>
+                            <option value="2">Option 1</option>
+                            <option value="3">Option 2</option>
+                            <option value="4">Option 3</option>
+                          </select>
+      
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <input type="number" name="pincode" id="form3Example90" class="form-control form-control-lg" />
+                            <label class="form-label" for="form3Example90">Pincode</label>
+                          </div>
+                      </div>
+      
+                      <div class="form-outline mb-4">
+                        <input type="date" name="DOB" id="form3Example9" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Example9">DOB</label>
+                      </div>
+      
+      
+                      <div class="form-outline mb-4">
+                        <input type="email" name="email" id="form3Example97" class="form-control form-control-lg"  placeholder="eg: john@gmail.com"/>
+                        <label class="form-label" for="form3Example97" >Email ID</label>
+                      </div>
+                      <div class="form-outline mb-4">
+                        <input type="text" name="username" id="form3Example97" class="form-control form-control-lg"  placeholder="eg: john@123"/>
+                        <label class="form-label" for="form3Example97" >Username</label>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <select name="qualification" class="select">
+                                <option value="1">Select</option>
+                                <option value="2">10th</option>
+                                <option value="3">12th</option>
+                                <option value="3">Diploma</option>
+                                <option value="4">Graduate</option>
+                                <option value="4">Post Graduate</option>    
+                              </select>
+                              <br>
+                        <label class="form-label" for="form3Example97" >Higest Qualification</label>
+                      </div>
+                      <div class="col-md-6 mb-4">
+                        <input type="text" name="stream" id="form3Example97" class="form-control form-control-lg"  />
+                        <label class="form-label" for="form3Example97" >Course Stream</label>
+                      </div>
+                      <div class="col-md-6 mb-4">
+                        <input type="text" name="skills" id="form3Example97" class="form-control form-control-lg"  />
+                        <label class="form-label" for="form3Example97" >Skills</label>
+                      </div>
+
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <input type="text" name="UDID" id="form3Example97" class="form-control form-control-lg"  />
+                        <label class="form-label" for="form3Example97" >Unique Disability ID (UDID)</label>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <input type="text"  name= "functional_difficulties" id="form3Example97" class="form-control form-control-lg"  />
+                        <label class="form-label" for="form3Example97" >Functional Difficulties</label>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <input type="text" name="assistive_device" id="form3Example97" class="form-control form-control-lg"  />
+                        <label class="form-label" for="form3Example97" >Assistive Devices Used</label>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <input type="text" name="human_assistance" id="form3Example97" class="form-control form-control-lg"  />
+                        <label class="form-label" for="form3Example97" >human assistance requirements</label>
+                        </div>
+
+                    
+                    <div class="col-md-6 mb-4">
+                     <input type="password" name="password" id="form3Example97" class="form-control form-control-lg"  />
+                    <label class="form-label" for="form3Example97" >Password</label>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                    <input type="text"  name="confirm_password" id="form3Example97" class="form-control form-control-lg"  />
+                    <label class="form-label" for="form3Example97" >Confirm Password</label>
+                    </div>
+
+                    </div>
+                    
+
+      
+                    <div class="d-flex justify-content-center pt-3">
+                        
+                        
+                        <button type="submit" class="btn btn-primary" id="liveAlertBtn">Submit</button>
+                        <br>
+                        
+                      </div>
+                      <!-- <div class="my-5" id="liveAlertPlaceholder"></div>
+                      <script>const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+                        const appendAlert = (message, type) => {
+                          const wrapper = document.createElement('div')
+                          wrapper.innerHTML = [
+                            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+                            `   <div>${message}</div>`,
+                            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+                            '</div>'
+                          ].join('')
+                        
+                          alertPlaceholder.append(wrapper)
+                        }
+                        
+                        const alertTrigger = document.getElementById('liveAlertBtn')
+                        if (alertTrigger) {
+                          alertTrigger.addEventListener('click', () => {
+                            appendAlert('Nice, you have registered successfully!', 'success')
+                          })
+                        }</script> -->
+
+                       
+                        </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+      <footer class="bg-light text-center border border-1px border-dark  text-lg-start ">
+        <!-- Grid container -->
+        <div class="container p-4 my-5">
+          <!--Grid row-->
+          <div class="row">
+            <!--Grid column-->
+            
+              <h5 class="text-uppercase">About us</h5>
+      
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+                molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+                aliquam voluptatem veniam, est atque cumque eum delectus sint!
+              </p>
+            
+            <!--Grid column-->
+      
+          </div>
+          <!--Grid row-->
+        </div>
+        <!-- Grid container -->
+      
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: lightblue;">
+          © 2020 Copyright:
+          <a class="text-dark" href="https://mdbootstrap.com/">Udyog Sarthi.com</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+    
+      <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>

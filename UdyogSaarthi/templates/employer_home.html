@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="icon" type="image/x-icon" style="border-radius: 50%;" href="{% static 'assets/logo.png' %}">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    
+    
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary " style="height: 60px;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'assets/logo.png' %}" alt="Logo" width="30" height="30" style="border-radius: 50%;" class="d-inline-block align-text-top ">
+                    Udyog Sarthi
+                  </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                   
+                    <li >
+                        <a href="{% url 'logout_page' %}">
+                            <button type="button" name="logout_page" class="btn btn-danger ms-auto mx-3">Logout</button>
+                        </a>
+                    </li>
+                   
+                    </div>
+
+                    
+                </div>
+                </ul>
+                
+                <a class="navbar-brand" href="#">
+                    Profile
+                    <img src="{% static 'assets/profile.png'%}" alt="Logo" width="30" height="30" style="border-radius: 50%;" class="d-inline-block align-text-top ">
+                   
+                  </a>
+              </div>
+            </div>
+          </nav>
+    </header>
+    <main>
+        
+            
+
+            <h1  style="padding-left: 20px; margin-top: 10px;margin-bottom: 10px;">Welcome, {{user.first_name}}!!</h1>
+            
+            <div class="card-body p-md-5 text-black">
+                <h1 class="mb-5 text-uppercase text-center">Post a Job</h1>
+                {% for message in messages %}
+                <h5 style="color: green;">{{message}}</h5>
+                {% endfor %}
+                <div class="container">
+                    
+                    <form method="post" action="{% url 'employer_home' %}" class="mt-4">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="organization_name">Organization Name:</label>
+                            <input type="text" id="organization_name" name="organization_name" class="form-control" required>
+                        </div>
+                        
+                        <div class=" col form-group mb-3">
+                            <label for="organization_type">Organization Type:</label>
+                            <select id="organization_type" name="organization_type" class="form-control">
+                                <option value="option1">Government</option>
+                                <option value="option2">PSU</option>
+                                <option value="option3">Private</option>
+                            </select>
+                        </div>
+
+
+                    
+                        <div class="form-group mb-3">
+                            <label for="job_title">Job Title:</label>
+                            <input type="text" id="job_title" name="job_title" class="form-control" required>
+                        </div>
+            
+                        <div class="form-group mb-3">
+                            <label   for="job_description">Job Description:</label>
+                            <textarea id="job_description" name="job_description" class="form-control" rows="4" required></textarea>
+                        </div>
+                        <div class="row">
+                        <div class="col ">
+                            <label for="num_of_openings">Number of Openings:</label>
+                            <input type="number" id="num_of_openings" name="openings" class="form-control">
+                        </div>
+            
+                        <div class="col">
+                            <label for="location">Location:</label>
+                            <input type="text" id="location" name="location" class="form-control mb-3">
+                        </div>
+                    </div class="d-flex justify-content-center pt-3">
+            
+                        <button type="submit"  class="btn btn-primary mb-3 ">Post Job</button>
+                        </div>
+                    </form>
+                </div>
+              </div>
+             
+    </main>
+
+    <footer class="bg-light text-center border border-1px border-dark mt-5 text-lg-start ">
+      
+        <div class="container p-4 my-5">
+          
+          <div class="row">
+            <!--Grid column-->
+            
+              <h5 class="text-uppercase">About us</h5>
+      
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+                molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+                aliquam voluptatem veniam, est atque cumque eum delectus sint!
+              </p>
+            
+            <!--Grid column-->
+      
+          </div>
+          <!--Grid row-->
+        </div>
+        <!-- Grid container -->
+      
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: lightblue;">
+          © 2020 Copyright:
+          <a class="text-dark" href="https://mdbootstrap.com/">Udyog Sarthi.com</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>

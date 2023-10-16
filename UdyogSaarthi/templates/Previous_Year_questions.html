@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="icon" type="image/x-icon" style="border-radius: 50%;" href="{% static 'assets/logo.png' %}">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    
+    
+</head>
+<body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary " style="height: 60px;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'assets/logo.png' %}" alt="Logo" width="30" height="30" style="border-radius: 50%;" class="d-inline-block align-text-top ">
+                Udyog Sarthi
+              </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                
+                    
+                
+              <li class="nav-item">
+                 {% if user.is_authenticated %}
+                 <a href="{% url 'candidate_home' %}" class="nav-link active" aria-current="page" href="#">Home</a>
+                 {% else %}
+                <a href="{% url 'index' %}" class="nav-link active" aria-current="page" href="#">Home</a>
+                {% endif %}
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'jobs_page' %}" class="nav-link active"  aria-current="page" href="#">Jobs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Notfications</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Learning
+                </a>
+                <ul class="dropdown-menu">
+
+                  <li><a href="{% url 'previous_Year_questions' %}" class="dropdown-item" href="#">Previous Year Question Papers</a></li>
+                  <li><a class="dropdown-item" href="#">Tutorials</a></li>
+                </ul>
+                <div class="d-flex align-items-end">
+                    {% if user.is_authenticated %}
+                <li >
+                    <a href="{% url 'logout_page' %}">
+                       
+                        <button type="button" name="logout_page" class="btn btn-danger ms-auto mx-3">Logout</button>
+                       
+
+                    </a>
+                </li>
+                    {% else %}
+                    <li >
+                        <a href="#">
+                            <button type="button" onclick="window.location.href = 'candidate_login';" class="btn btn-success ms-auto mx-3">Candidate Login</button>
+                        </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <button type="button" onclick="window.location.href = 'employer_login';" class="btn btn-success ms-auto mx-3">Employer Login</button>
+                      </a>
+                    </li>
+                    <li >
+                         <!-- Button trigger modal -->
+<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Sign Up
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Sign Up</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Please select your role!!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" onclick="window.location.href = 'register_candidate';" class="btn btn-primary" data-bs-dismiss="modal">Candidate</button>
+          <button type="button" onclick="window.location.href = 'register_employer';"class="btn btn-primary" data-bs-dismiss="modal">Employer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>const myModal = document.getElementById('staticBackdrop')
+const myInput = document.getElementById('staticBackdropLabel')
+
+myModal.addEventListener('shown.bs.modal', () => {
+  myInput.focus()
+})</script>
+    {% endif %}
+               
+                </div>
+
+                
+            </div>
+            </ul>
+            {% if user.is_authenticated %}
+            <a class="navbar-brand" href="#">
+                Profile
+                <img src="{% static 'assets/profile.png'%}" alt="Logo" width="30" height="30" style="border-radius: 50%;" class="d-inline-block align-text-top ">
+               
+              </a>
+              {% endif %}
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+       
+        <h1>Previous Year Question Papers</h1>  
+      
+        <table class="table table-striped">
+            <tr>
+                <th>Paper</th>
+                <th>file</th>
+            </tr>
+        {% for pyq in PYQs %}
+        <tr>
+            <td>{{pyq.name}}</td>
+            <td><button type="button" class="btn btn-primary"><a style="color: white;" href="{{ pyq.pdf.url }}" target="_blank">PDF</a></button></td>
+
+        </tr>
+        {% endfor %}
+        </table>
+
+    </main>
+        <footer class="bg-light text-center border border-1px border-dark mt-5 text-lg-start ">
+        <!-- Grid container -->
+        <div class="container p-4 my-5">
+          <!--Grid row-->
+          <div class="row">
+            <!--Grid column-->
+            
+              <h5 class="text-uppercase">About us</h5>
+      
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+                molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+                aliquam voluptatem veniam, est atque cumque eum delectus sint!
+              </p>
+            
+            <!--Grid column-->
+      
+          </div>
+          <!--Grid row-->
+        </div>
+        <!-- Grid container -->
+      
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: lightblue;">
+          © 2020 Copyright:
+          <a class="text-dark" href="https://mdbootstrap.com/">Udyog Sarthi.com</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>
