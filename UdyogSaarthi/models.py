@@ -53,6 +53,7 @@ class PYQs(models.Model):
     pdf = models.FileField(upload_to="files")
 
 class jobs(models.Model):
+   
     ORGANIZATION_CHOICES = (
         ( 'Private','Private'),
         ( 'Government','Government'),
@@ -64,7 +65,22 @@ class jobs(models.Model):
     job_description = models.TextField(max_length=500)
     openings = models.IntegerField()
     location = models.CharField(max_length=100)
+    
 
     def __str__(self):
         return self.job_title
-    
+
+class Posted_job(models.Model):
+    employer=models.ForeignKey(User,on_delete=models.CASCADE)
+    job=models.ForeignKey(jobs,on_delete=models.CASCADE)
+    posted_date = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"{self.employer.username} posted {self.job.job_title}"
+
+class Application(models.Model):
+    candidate = models.ForeignKey(User, on_delete=models.CASCADE)
+    job = models.ForeignKey(jobs, on_delete=models.CASCADE)
+    applied_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.candidate.username} applied for {self.job.job_title}"

@@ -35,7 +35,10 @@ urlpatterns = [
     path('employer_home',employer_home,name='employer_home'),
     path('previous_Year_questions',previous_Year_questions,name='previous_Year_questions'),
     path('logout_page',logout_page,name="logout_page"),
-    path('jobs_page',jobs_page,name='jobs_page'),    
+    path('jobs_page',jobs_page,name='jobs_page'),
+    path('jobs/apply/<int:job_id>/', apply_job, name='apply_job'),
+    path ('employer_home/posted_job',posted_job,name='posted_job'),
+    path('jobs/applicants/<int:job_id>/',applicants,name='applicants'),
 ]
 
 if settings.DEBUG:

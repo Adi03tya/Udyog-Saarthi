@@ -165,6 +165,8 @@ def employer_login(request):
         return render(request,'employer_login.html')
 @login_required(login_url="employer_login")
 def employer_home(request):
+    query=None
+    posted_job = None
     if request.method == 'POST':
         organization_name = request.POST['organization_name']
         organization_type = request.POST['organization_type']
@@ -172,15 +174,68 @@ def employer_home(request):
         job_description = request.POST['job_description']
         openings=request.POST['openings']
         location = request.POST['location']
-
+        
         job= jobs.objects.create(organization_name=organization_name, organization_type=organization_type
                                  ,job_title=job_title,job_description=job_description,
                                  openings=openings,location=location)
         job.save()
+        
+        posted_job = Posted_job.objects.create(employer=request.user,job=job)
+        posted_job.save()
+        
+        
         messages.success(request, 'Job Posted successfully!!')
         return redirect('employer_home')
     else:
-        return render(request, 'employer_home.html')
+        return render(request, 'employer_home.html',)
+    
+
+@login_required(login_url="employer_login")
+def posted_job(request):
+   
+    posted_job=None
+    job_applicants = []
+    posted_job = Posted_job.objects.filter(employer=request.user)
+    query = [job.job for job in posted_job]
+    for job in query:
+            
+            applicants = Application.objects.filter(job=job.id)
+            job_applicants.append({'job': job.job_title, 'applicants': applicants})
+
+    return render(request, 'posted_job.html',{'posted_job':query})
+
+@login_required(login_url="employer_login")
+def applicants(request,job_id):
+   
+   job = jobs.objects.get(id=job_id)
+   applicants = Application.objects.filter(job=job)
+
+   return render(request, 'posted_job.html', {'applicants': applicants, 'job': job})
+    
+
+    
+@login_required(login_url="candidate_login")    
+def apply_job(request, job_id):
+    job = jobs.objects.get(id=job_id)
+    application = None
+    if request.method == 'POST':
+        application = Application.objects.create(candidate=request.user, job=job)
+        application.save()
+        return redirect('jobs_page')
+    return render(request, 'apply_job.html', {'job': job})
+
+
+
+
+# @login_required(login_url="candidate_login")
+# def applied_jobs(request):
+#     # Get all applications for the current candidate
+#     applications = Application.objects.filter(candidate=request.user)
+
+#     # Get the jobs associated with the applications
+#     applied_jobs = [app.job for app in applications]
+
+#     return render(request, 'applied_jobs.html', {'applied_jobs': applied_jobs})
     
 def logout_page(request):
     auth.logout(request)
@@ -197,5 +252,15 @@ def previous_Year_questions(request):
 
 
 def jobs_page(request):
+    # applications = Application.objects.filter(candidate=request.user)
     job= jobs.objects.all()
-    return render(request,'jobs_page.html',{"jobs":job})
+    # return render(request,'jobs_page.html',{"jobs":job,"applications":applications})
+    if request.user.is_authenticated:
+        applications = Application.objects.filter(candidate=request.user)
+        applied_jobs = [app.job for app in applications]
+        return render(request,'jobs_page.html',{"jobs":job , "applied_jobs": applied_jobs})
+    else:
+        return render(request,'jobs_page.html',{"jobs":job })
+
+
+
