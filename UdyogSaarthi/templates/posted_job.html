@@ -27,9 +27,8 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                 <li><a href="{% url 'posted_job' %}" class="nav-link active" aria-current="page" >Posted Jobs</a> 
-                 </li>
-                  <li >
+                   
+                    <li >
                         <a href="{% url 'logout_page' %}">
                             <button type="button" name="logout_page" class="btn btn-danger ms-auto mx-3">Logout</button>
                         </a>
@@ -54,60 +53,42 @@
         
             
 
-            <h1  style="padding-left: 20px; margin-top: 10px;margin-bottom: 10px;">Welcome, {{user.first_name}}!!</h1>
             
-            <div class="card-body p-md-5 text-black border-1px" style="border: 1px solid #000000; border-radius: 5px; margin: 50px;" >
-                <h1 class="mb-5 text-uppercase text-center">Post a Job</h1>
-                {% for message in messages %}
-                <h5 style="color: green;">{{message}}</h5>
-                {% endfor %}
-                <div class="container">
-                    
-                    <form method="post" action="{% url 'employer_home' %}" class="mt-4">
-                        {% csrf_token %}
-                        <div class="form-group mb-3">
-                            <label for="organization_name">Organization Name:</label>
-                            <input type="text" id="organization_name" name="organization_name" class="form-control" required>
-                        </div>
-                        
-                        <div class=" col form-group mb-3">
-                            <label for="organization_type">Organization Type:</label>
-                            <select id="organization_type" name="organization_type" class="form-control">
-                                <option value="option1">Government</option>
-                                <option value="option2">PSU</option>
-                                <option value="option3">Private</option>
-                            </select>
-                        </div>
+            
 
+              <h1 class="mx-3 my-5"> Jobs Posted by you</h1>
+              
+              <div class="row row-cols-1 row-cols-md-3 g-4">
+                {% for job in posted_job %}
+                <div class="col">
+                  <div class="card">
+                    <!-- <img style="height: 50px; width: 50px; " src="https://www.accenture.com/in-en/careers/jobdetails/_jcr_content/root/container_main/container/joblistinghero/image.coreimg.svg/1686266251822/acc-gt-dimensional-purple-rgb-rev.svg" class="card-img-top mx-3 my-2" alt="..."> -->
+                    <h3 class="domain mt-2" style="padding-left: 10px;" >{{job.organization_name}}</h3>
+                    <div class="card-body">
+                      <h5 class="card-title">{{job.job_title}}</h5>
+                      <h6 class="domain mt-2">Domain : </h6>
+                      <p>Technology</p>
+                      <h6 class="description mt-2">job Description :</h6>
+                      <p class="card-text">{{job.job_description}}</p>
+                      <h6 class="description mt-2">Openings :</h6>
+                      <p class="card-text">{{job.openings}}</p>
+                      <h6 class="location">Location : </h6>
+                        <p>{{job.location}}</p>
+                        {% for app in job_applicants %}
 
-                    
-                        <div class="form-group mb-3">
-                            <label for="job_title">Job Title:</label>
-                            <input type="text" id="job_title" name="job_title" class="form-control" required>
-                        </div>
-            
-                        <div class="form-group mb-3">
-                            <label   for="job_description">Job Description:</label>
-                            <textarea id="job_description" name="job_description" class="form-control" rows="4" required></textarea>
-                        </div>
-                        <div class="row">
-                        <div class="col ">
-                            <label for="num_of_openings">Number of Openings:</label>
-                            <input type="number" id="num_of_openings" name="openings" class="form-control">
-                        </div>
-            
-                        <div class="col">
-                            <label for="location">Location:</label>
-                            <input type="text" id="location" name="location" class="form-control mb-3">
-                        </div>
-                    </div class="d-flex justify-content-center pt-3">
-            
-                        <button type="submit"  class="btn btn-primary mb-3 ">Post Job</button>
-                        </div>
-                    </form>
+                        if(app.job = job.job_title)
+
+                        <p class="card-text">{{app.applicants}}</p>
+                        {% endfor %}
+                        </div> 
+                    </div>
+                  </div>
+                  {% empty %}
+                  <h6>You haven't Posted any jobs yet.</h6>
                 </div>
-              </div>
-
+               
+                {% endfor %}
+            
              
     </main>
 

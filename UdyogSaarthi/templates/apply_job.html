@@ -125,48 +125,20 @@
           </nav>
     </header>
     <main>
-
-          {% if user.is_authenticated %}
-          <h1 class="my-4 mx-3">Jobs You Have Applied For</h1>
-        <ul class="my-2 mx-3" >
-        {% for applied_job in applied_jobs %}
-        <li class= >{{ applied_job.job_title }} - {{ applied_job.organization_name }}</li>
-        {% empty %}
-        <li>You haven't applied for any jobs yet.</li>
-        {% endfor %}
-        </ul>
-          {% endif %}
-        
-        <h1 class="my-5 mx-3">Jobs</h1>
-
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                {% for job in jobs %}
-                <div class="col">
-                  <div class="card">
-                    <!-- <img style="height: 50px; width: 50px; " src="https://www.accenture.com/in-en/careers/jobdetails/_jcr_content/root/container_main/container/joblistinghero/image.coreimg.svg/1686266251822/acc-gt-dimensional-purple-rgb-rev.svg" class="card-img-top mx-3 my-2" alt="..."> -->
-                    <h3 class="domain mt-2" style="padding-left: 10px;" >{{job.organization_name}}</h3>
-                    <div class="card-body">
-                      <h5 class="card-title">{{job.job_title}}</h5>
-                      <h6 class="domain mt-2">Domain : </h6>
-                      <p>Technology</p>
-                      <h6 class="description mt-2">job Description :</h6>
-                      <p class="card-text">{{job.job_description}}</p>
-                      <h6 class="description mt-2">Openings :</h6>
-                      <p class="card-text">{{job.openings}}</p>
-                      <h6 class="location">Location : </h6>
-                        <p>{{job.location}}</p>
-                        <div class="text-center">
-                          <a href="{% url 'apply_job' job.id %}">
-                            <button type="button" class="btn btn-primary">Apply</button>
-                        </a>
-                        </div>
-                       
-                    </div>
-                  </div>
-                </div>
-                {% endfor %}
-            </div>
-        
+      
+        <h1 class="my-5 mx-3">Apply for Job</h1>
+        <div class="container">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="job_id" value="{{ job.id }}">
+                <h4>{{ job.job_title }}</h4>
+                <p>Organization: {{ job.organization_name }}</p>
+                <p>Job Description: {{ job.job_description }}</p>
+                <p>Openings: {{ job.openings }}</p>
+                <p>Location: {{ job.location }}</p>
+                <button type="submit" class="btn btn-primary">Apply</button>
+            </form>
+        </div>
     </main>
         <footer class="bg-light text-center border border-1px border-dark mt-5 text-lg-start ">
         <!-- Grid container -->

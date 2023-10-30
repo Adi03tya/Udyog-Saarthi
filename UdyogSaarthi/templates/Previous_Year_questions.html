@@ -121,7 +121,7 @@ myModal.addEventListener('shown.bs.modal', () => {
         </div>
       </nav>
     </header>
-    <main>
+    <!-- <main>
        
         <h1>Previous Year Question Papers</h1>  
       
@@ -139,8 +139,23 @@ myModal.addEventListener('shown.bs.modal', () => {
         {% endfor %}
         </table>
 
-    </main>
-        <footer class="bg-light text-center border border-1px border-dark mt-5 text-lg-start ">
+    </main> -->
+    <main>
+      <h1 class="my-5 mx-3" style="text-align: center;">Previous Year Question Papers</h1>
+      <table class="table table-striped">
+          <tr>
+              <th>Paper</th>
+              <th>File</th>
+          </tr>
+          {% for pyq in PYQs %}
+          <tr>
+              <td>{{pyq.name}}</td>
+              <td><a href="{{ pyq.pdf.url }}" class="btn btn-primary" target="_blank">PDF</a></td>
+          </tr>
+          {% endfor %}
+      </table>
+  </main>    
+    <footer class="bg-light text-center border border-1px border-dark mt-5 text-lg-start ">
         <!-- Grid container -->
         <div class="container p-4 my-5">
           <!--Grid row-->
